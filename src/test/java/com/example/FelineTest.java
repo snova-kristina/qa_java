@@ -24,8 +24,9 @@ public class FelineTest {
 
   @Test
   public void getKittensWithParamsShouldEqualSentValue() {
+    int expectedKittensCount = 3;
     Feline feline = new Feline();
-    Assert.assertEquals(3, feline.getKittens(3));
+    Assert.assertEquals(expectedKittensCount, feline.getKittens(expectedKittensCount));
   }
 
   @Test

@@ -1,15 +1,16 @@
 package com.example;
 
-import static org.junit.Assert.assertThrows;
-import static org.mockito.Mockito.mock;
-
-import java.util.List;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CatTest {
@@ -25,7 +26,7 @@ public class CatTest {
 
   @Test
   public void getSoundShouldReturnCertainSound() {
-    Assert.assertEquals("Мяу", cat.getSound());
+    assertEquals("Мяу", cat.getSound());
   }
 
   @Test
@@ -33,12 +34,14 @@ public class CatTest {
     List<String> expectedFoodList = List.of("Животные", "Птицы", "Рыба");
     Mockito.when(mockFeline.eatMeat()).thenReturn(expectedFoodList);
     List<String> actual = cat.getFood();
-    Assert.assertEquals(expectedFoodList, actual);
+    assertEquals(expectedFoodList, actual);
   }
 
   @Test
   public void getFoodShouldThrowExeption() throws Exception {
-    Mockito.when(mockFeline.eatMeat()).thenThrow(Exception.class);
-    assertThrows(Exception.class, () -> cat.getFood());
+    String errorMessage = "Cannot eat meat";
+    Mockito.when(mockFeline.eatMeat()).thenThrow(new Exception(errorMessage));
+    Exception exception =assertThrows(Exception.class, () -> cat.getFood());
+    assertEquals(errorMessage, exception.getMessage());
   }
 }
